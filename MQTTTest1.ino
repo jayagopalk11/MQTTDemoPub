@@ -80,7 +80,7 @@ void loop() {
   } else {
     Serial.println(F("OK!"));
   }
-  delay(5000);
+  delay(30000);
   // ping the server to keep the mqtt connection alive
   // NOT required if you are publishing once every KEEPALIVE seconds
   /*
