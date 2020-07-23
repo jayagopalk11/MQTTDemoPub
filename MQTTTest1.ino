@@ -9,8 +9,8 @@
 
 /************************* Adafruit.io Setup *********************************/
 
-#define AIO_SERVER      "SERVER"
-#define AIO_SERVERPORT  1883                   // use 8883 for SSL
+#define AIO_SERVER      "server"
+#define AIO_SERVERPORT  5001                   // use 8883 for SSL
 #define AIO_USERNAME    ""
 #define AIO_KEY         ""
 
@@ -70,12 +70,12 @@ void loop() {
   // Ensure the connection to the MQTT server is alive (this will make the first
   // connection and automatically reconnect when disconnected).  See the MQTT_connect
   // function definition further below.
-  String payload = "{'location':'door','alert':'100'}";
+  String payload = "{\"location\":\"door\",\"value\":100}";
   MQTT_connect();
   Serial.print(F("\nSending sensor val "));
   Serial.print(x);
   Serial.print("...");
-  if (! sensor.publish(payload)) {
+  if (! sensor.publish((char*) payload.c_str())) {
     Serial.println(F("Failed"));
   } else {
     Serial.println(F("OK!"));
