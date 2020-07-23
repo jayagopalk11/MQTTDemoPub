@@ -28,7 +28,7 @@ Adafruit_MQTT_Client mqtt(&client, AIO_SERVER, AIO_SERVERPORT, AIO_USERNAME, AIO
 
 // Setup a feed called 'sensor' for publishing.
 // Notice MQTT paths for AIO follow the form: <username>/feeds/<feedname>
-Adafruit_MQTT_Publish sensor = Adafruit_MQTT_Publish(&mqtt, AIO_USERNAME "test1/test1");
+Adafruit_MQTT_Publish sensor = Adafruit_MQTT_Publish(&mqtt, AIO_USERNAME "iot/test1");
 
 // Setup a feed called 'onoff' for subscribing to changes.
 //Adafruit_MQTT_Subscribe onoffbutton = Adafruit_MQTT_Subscribe(&mqtt, AIO_USERNAME "/feeds/onoff");
@@ -70,17 +70,17 @@ void loop() {
   // Ensure the connection to the MQTT server is alive (this will make the first
   // connection and automatically reconnect when disconnected).  See the MQTT_connect
   // function definition further below.
-  
+  String payload = "{'location':'door','alert':'100'}";
   MQTT_connect();
   Serial.print(F("\nSending sensor val "));
   Serial.print(x);
   Serial.print("...");
-  if (! sensor.publish(x++)) {
+  if (! sensor.publish(payload)) {
     Serial.println(F("Failed"));
   } else {
     Serial.println(F("OK!"));
   }
-
+  delay(5000);
   // ping the server to keep the mqtt connection alive
   // NOT required if you are publishing once every KEEPALIVE seconds
   /*
